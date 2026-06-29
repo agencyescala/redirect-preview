@@ -1046,7 +1046,9 @@
     .hero-visual::before, .hero-visual::after{ display:none; } /* sin capas apiladas en móvil */
     /* V2.3: en móvil la foto del hero pasa a fondo completo, más tenue y con overlay más fuerte */
     .hero-bg img{ width:100%; opacity:.94; object-position:center 30%; }
-    .hero-bg::after{ background:linear-gradient(180deg, rgba(250,250,247,.22) 0%, rgba(250,250,247,.56) 56%, var(--bg) 100%); }
+    /* preview-fix móvil: el velo no se vuelve blanco sólido abajo → la foto cubre toda la altura del hero
+       (incl. la zona del formulario); la tarjeta del formulario es opaca, así que sigue legible */
+    .hero-bg::after{ background:linear-gradient(180deg, rgba(250,250,247,.22) 0%, rgba(250,250,247,.54) 56%, rgba(250,250,247,.66) 100%); }
     .kontakt-bg img{ opacity:.70; }
     .fab span.txt{ display:none; }
     .fab{ padding:14px; bottom:16px; }
@@ -2099,7 +2101,7 @@
         <div class="video-grid vgrid-3" id="rfVidGrid">
 
           <figure class="video-card">
-            <video class="media-video" controls playsinline preload="metadata" aria-label="Einblick in die Arbeit von ReDirect">
+            <video class="media-video" controls playsinline preload="metadata" poster="assets/videos/redirect_video_01.jpg" aria-label="Einblick in die Arbeit von ReDirect">
               <source src="assets/videos/redirect_video_01.mp4" type="video/mp4">
               <span data-i18n="videos.fallback">Ihr Browser unterstützt das Video-Tag nicht.</span>
             </video>
@@ -2110,7 +2112,7 @@
           </figure>
 
           <figure class="video-card">
-            <video class="media-video" controls playsinline preload="metadata" aria-label="Service vor Ort — direkt koordiniert">
+            <video class="media-video" controls playsinline preload="metadata" poster="assets/videos/redirect_video_02.jpg" aria-label="Service vor Ort — direkt koordiniert">
               <source src="assets/videos/redirect_video_02.mp4" type="video/mp4">
               <span data-i18n="videos.fallback">Ihr Browser unterstützt das Video-Tag nicht.</span>
             </video>
@@ -2121,7 +2123,7 @@
           </figure>
 
           <figure class="video-card">
-            <video class="media-video" controls playsinline preload="metadata" aria-label="Arbeiten und Montagen vor Ort">
+            <video class="media-video" controls playsinline preload="metadata" poster="assets/videos/redirect_video_03.jpg" aria-label="Arbeiten und Montagen vor Ort">
               <source src="assets/videos/redirect_video_03.mp4" type="video/mp4">
               <span data-i18n="videos.fallback">Ihr Browser unterstützt das Video-Tag nicht.</span>
             </video>
