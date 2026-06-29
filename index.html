@@ -1045,7 +1045,7 @@
     .hero-visual{ max-width:none; }
     .hero-visual::before, .hero-visual::after{ display:none; } /* sin capas apiladas en móvil */
     /* V2.3: en móvil la foto del hero pasa a fondo completo, más tenue y con overlay más fuerte */
-    .hero-bg img{ width:100%; opacity:.94; object-position:center 30%; }
+    .hero-bg img{ width:100%; opacity:.94; object-position:68% center; } /* preview-fix móvil: encuadre al camión/operario (zona con más contraste) */
     /* preview-fix móvil: el velo no se vuelve blanco sólido abajo → la foto cubre toda la altura del hero
        (incl. la zona del formulario); la tarjeta del formulario es opaca, así que sigue legible */
     .hero-bg::after{ background:linear-gradient(180deg, rgba(250,250,247,.22) 0%, rgba(250,250,247,.54) 56%, rgba(250,250,247,.66) 100%); }
