@@ -1535,6 +1535,37 @@
     .hero-bg img{ filter:saturate(1.0) contrast(1.02) brightness(.92); opacity:.90; }
   }
 </style>
+
+<style id="cookieBannerStyle">
+  #cookieBanner{
+    position:fixed; left:16px; right:16px; bottom:16px; z-index:9999;
+    max-width:560px; margin:0 auto;
+    background:var(--bg-card); color:var(--ink);
+    border:1px solid var(--line); border-radius:16px;
+    box-shadow:0 12px 32px -12px rgba(20,20,20,.28);
+    padding:18px 20px; display:flex; flex-direction:column; gap:14px;
+    animation:cookieIn .32s var(--ease) both;
+  }
+  #cookieBanner[hidden]{ display:none; }
+  @keyframes cookieIn{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion:reduce){ #cookieBanner{ animation:none; } }
+  .cookie-text{ font-size:13.5px; line-height:1.5; color:rgba(20,20,20,.82); margin:0; }
+  .cookie-text a{ color:var(--red); text-decoration:underline; text-underline-offset:2px; }
+  .cookie-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+  .cookie-actions .btn-primary, .cookie-actions .btn-ghost{
+    flex:1 1 auto; justify-content:center; font-size:13.5px; padding:11px 16px;
+  }
+  @media (min-width:641px){
+    #cookieBanner{ left:auto; right:24px; bottom:24px; flex-direction:row; align-items:center; max-width:640px; }
+    .cookie-text{ flex:1 1 auto; }
+    .cookie-actions{ flex:0 0 auto; }
+    .cookie-actions .btn-primary, .cookie-actions .btn-ghost{ flex:0 0 auto; }
+  }
+  /* deja hueco al FAB de WhatsApp mientras el banner está visible */
+  .fab.fab-cookie{ bottom:104px; }
+  @media (max-width:760px){ .fab.fab-cookie{ bottom:190px; } }
+  @media (min-width:641px){ .fab.fab-cookie{ bottom:96px; } }
+</style>
 </head>
 <body>
 
@@ -1588,9 +1619,9 @@
         <div class="hero-copy">
           <span class="eyebrow hero-eyebrow" data-i18n="hero.eyebrow">Umzug &amp; Reinigung · Zürich &amp; Aargau</span>
           <h1>
-            <span class="w" data-i18n="hero.h1a">Umzug.</span>
+            <span class="w r" data-i18n="hero.h1a">Umzug.</span>
             <span class="w" data-i18n="hero.h1b">Transport.</span>
-            <span class="w r" data-i18n="hero.h1c">Endreinigung.</span>
+            <span class="w" data-i18n="hero.h1c">Endreinigung.</span>
           </h1>
           <div class="hero-underline" aria-hidden="true"></div>
           <p class="hero-sub" data-i18n="hero.sub">Alles aus einer Hand — Zürich &amp; Aargau.</p>
@@ -2493,6 +2524,17 @@
   <span class="txt">WhatsApp</span>
 </a>
 
+<div id="cookieBanner" hidden role="dialog" aria-live="polite" data-i18n-aria="cookie.aria" aria-label="Cookie notice">
+  <p class="cookie-text">
+    <span data-i18n="cookie.text">Wir verwenden nur technisch notwendige Cookies. Optionale Cookies erst nach Ihrer Zustimmung.</span>
+    <a href="#datenschutz" id="cookieLink" data-i18n="cookie.link">Datenschutz</a>
+  </p>
+  <div class="cookie-actions">
+    <button type="button" id="cookieReject" class="btn-ghost" data-i18n="cookie.reject">Nur notwendige</button>
+    <button type="button" id="cookieAccept" class="btn-primary" data-i18n="cookie.accept">Alle akzeptieren</button>
+  </div>
+</div>
+
 <script>
 (function(){
   "use strict";
@@ -2541,6 +2583,7 @@
       "sendguide.eyebrow":"Was senden?","sendguide.title":"Damit es schnell geht","sendguide.sub":"Senden Sie uns diese Angaben per WhatsApp — so können wir Ihre Anfrage direkt einschätzen.",
       "send1.t":"Fotos der Möbel / Räume","send1.d":"Ein paar Bilder reichen für den ersten Eindruck.","send2.t":"Start & Ziel / Zone","send2.d":"Woher, wohin — oder die ungefähre Zone.","send3.t":"Ungefähres Datum","send3.d":"Wann der Umzug oder Service stattfinden soll.","send4.t":"Gewünschte Leistung","send4.d":"Umzug, Transport, Montage oder Endreinigung.",
       "foot.brand":"Umzug & Reinigung — alles aus einer Hand. Lokal in Zürich & Aargau.","foot.legal.h":"Rechtliches","foot.impressum":"Impressum","foot.datenschutz":"Datenschutz","foot.note":"Rechtliche Angaben werden vor Veröffentlichung ergänzt.",
+      "cookie.text":"Wir verwenden nur technisch notwendige Cookies. Optionale Cookies erst nach Ihrer Zustimmung.","cookie.accept":"Alle akzeptieren","cookie.reject":"Nur notwendige","cookie.link":"Datenschutz","cookie.aria":"Cookie-Hinweis",
       "nav.galerie":"Galerie","nav.videos":"Videos",
       "sec.galerie.eyebrow":"Galerie","sec.galerie.title":"Echte Arbeiten von ReDirect","sec.galerie.desc":"Echte Fotos von Leistungen, Montagen und Arbeiten vor Ort.",
       "sec.videos.eyebrow":"Videos","sec.videos.title":"Echtes Material von ReDirect","sec.videos.desc":"Echte Beispiele von Arbeiten und Montagen vor Ort.","videos.v1.cap":"Montage im Innenbereich, mit angepassten Teilen und bereit zur Nutzung.","videos.v2.cap":"Sorgfältig vorbereitetes und transportiertes Material während des Einsatzes.","videos.v3.cap":"Fertiges Ergebnis nach Montage und Einrichtung in der Wohnung.","videos.v1.pill":"Möbelmontage","videos.v2.pill":"Umzug","videos.v3.pill":"Möbel nach Mass / Montage","gallery.real":"Echte Fotos","videos.cta":"Projekt per WhatsApp anfragen","videos.fallback":"Ihr Browser unterstützt das Video-Tag nicht.","videos.real":"Echtes Video",
@@ -2590,6 +2633,7 @@
       "sendguide.eyebrow":"What to send?","sendguide.title":"So it goes quickly","sendguide.sub":"Send us these details on WhatsApp — so we can estimate your request right away.",
       "send1.t":"Photos of furniture / rooms","send1.d":"A few pictures are enough for a first impression.","send2.t":"Start & destination / area","send2.d":"From where, to where — or the approximate area.","send3.t":"Approximate date","send3.d":"When the move or service should take place.","send4.t":"Desired service","send4.d":"Moving, transport, assembly or final cleaning.",
       "foot.brand":"Moving & cleaning — everything from one team. Local in Zürich & Aargau.","foot.legal.h":"Legal","foot.impressum":"Imprint","foot.datenschutz":"Privacy","foot.note":"Legal details will be added before publication.",
+      "cookie.text":"We only use technically necessary cookies. Optional cookies only after your consent.","cookie.accept":"Accept all","cookie.reject":"Only necessary","cookie.link":"Privacy","cookie.aria":"Cookie notice",
       "nav.galerie":"Gallery","nav.videos":"Videos",
       "sec.galerie.eyebrow":"Gallery","sec.galerie.title":"Real work by ReDirect","sec.galerie.desc":"Real photos of services, assemblies and work on location.",
       "sec.videos.eyebrow":"Videos","sec.videos.title":"Real material from ReDirect","sec.videos.desc":"Real examples of work and assemblies on location.","videos.v1.cap":"Indoor assembly with adjusted pieces, ready to use.","videos.v2.cap":"Materials prepared and moved carefully during the service.","videos.v3.cap":"Final result after assembly and interior organization.","videos.v1.pill":"Furniture assembly","videos.v2.pill":"Move","videos.v3.pill":"Custom furniture / Assembly","gallery.real":"Real photos","videos.cta":"Request via WhatsApp","videos.fallback":"Your browser does not support the video tag.","videos.real":"Real video",
@@ -2639,6 +2683,7 @@
       "sendguide.eyebrow":"Cosa inviare?","sendguide.title":"Per fare in fretta","sendguide.sub":"Inviaci questi dati su WhatsApp — così possiamo valutare subito la tua richiesta.",
       "send1.t":"Foto dei mobili / stanze","send1.d":"Bastano alcune immagini per una prima idea.","send2.t":"Partenza & destinazione / zona","send2.d":"Da dove, verso dove — o la zona indicativa.","send3.t":"Data indicativa","send3.d":"Quando dovrebbe avvenire il trasloco o il servizio.","send4.t":"Servizio desiderato","send4.d":"Trasloco, trasporto, montaggio o pulizia finale.",
       "foot.brand":"Trasloco & pulizia — tutto da un unico team. Locali a Zürich & Aargau.","foot.legal.h":"Note legali","foot.impressum":"Impressum","foot.datenschutz":"Privacy","foot.note":"Le informazioni legali saranno aggiunte prima della pubblicazione.",
+      "cookie.text":"Utilizziamo solo cookie tecnicamente necessari. Cookie opzionali solo dopo il tuo consenso.","cookie.accept":"Accetta tutti","cookie.reject":"Solo necessari","cookie.link":"Privacy","cookie.aria":"Avviso cookie",
       "nav.galerie":"Galleria","nav.videos":"Video",
       "sec.galerie.eyebrow":"Galleria","sec.galerie.title":"Lavori reali di ReDirect","sec.galerie.desc":"Foto reali di servizi, montaggi e lavori sul posto.",
       "sec.videos.eyebrow":"Video","sec.videos.title":"Materiale reale di ReDirect","sec.videos.desc":"Esempi reali di lavori e montaggi sul posto.","videos.v1.cap":"Montaggio interno con elementi regolati e pronti all'uso.","videos.v2.cap":"Materiale preparato e trasportato con cura durante il servizio.","videos.v3.cap":"Risultato finale dopo il montaggio e l'organizzazione dell'interno.","videos.v1.pill":"Montaggio mobili","videos.v2.pill":"Trasloco","videos.v3.pill":"Mobili su misura / Montaggio","gallery.real":"Foto reali","videos.cta":"Richiedi via WhatsApp","videos.fallback":"Il tuo browser non supporta il tag video.","videos.real":"Video reale",
@@ -2688,6 +2733,7 @@
       "sendguide.eyebrow":"¿Qué enviar?","sendguide.title":"Para que vaya rápido","sendguide.sub":"Envíanos estos datos por WhatsApp — así podemos estimar tu solicitud enseguida.",
       "send1.t":"Fotos de muebles / estancias","send1.d":"Con unas pocas imágenes basta para una primera impresión.","send2.t":"Origen y destino / zona","send2.d":"Desde dónde, hasta dónde — o la zona aproximada.","send3.t":"Fecha aproximada","send3.d":"Cuándo debería realizarse la mudanza o el servicio.","send4.t":"Servicio deseado","send4.d":"Mudanza, transporte, montaje o limpieza final.",
       "foot.brand":"Mudanza y limpieza — todo de un mismo equipo. Locales en Zürich y Aargau.","foot.legal.h":"Legal","foot.impressum":"Aviso legal","foot.datenschutz":"Privacidad","foot.note":"Los datos legales se añadirán antes de la publicación.",
+      "cookie.text":"Usamos solo cookies técnicamente necesarias. Las opcionales solo tras tu consentimiento.","cookie.accept":"Aceptar todas","cookie.reject":"Solo necesarias","cookie.link":"Privacidad","cookie.aria":"Aviso de cookies",
       "nav.galerie":"Galería","nav.videos":"Vídeos",
       "sec.galerie.eyebrow":"Galería","sec.galerie.title":"Una mirada a nuestro trabajo","sec.galerie.desc":"Fotos reales de servicios, montajes y trabajos realizados en ubicación.",
       "sec.videos.eyebrow":"Vídeos","sec.videos.title":"Material real de ReDirect","sec.videos.desc":"Ejemplos reales de trabajos y montajes en ubicación.","videos.v1.cap":"Montaje realizado en interior, con piezas ajustadas y listas para usar.","videos.v2.cap":"Material preparado y trasladado con cuidado durante el servicio.","videos.v3.cap":"Resultado final de montaje y organización en vivienda.","videos.v1.pill":"Montaje de muebles","videos.v2.pill":"Mudanza","videos.v3.pill":"Muebles a medida / Montaje","gallery.real":"Fotos reales","videos.cta":"Solicitar por WhatsApp","videos.fallback":"Su navegador no soporta la etiqueta de vídeo.","videos.real":"Vídeo real",
@@ -3482,6 +3528,52 @@
   next.addEventListener("click",function(){ go(current+1); });
   window.addEventListener("resize",function(){ render(); });
   render();
+})();
+</script>
+
+<script id="cookieBannerScript">
+(function(){
+  "use strict";
+  var STORAGE_KEY = "redirect_cookie_consent";
+  var banner = document.getElementById("cookieBanner");
+  if(!banner) return;
+  var acceptBtn = document.getElementById("cookieAccept");
+  var rejectBtn = document.getElementById("cookieReject");
+  var fab = document.querySelector(".fab");
+
+  // Placeholder: aquí se cargarán scripts opcionales (analytics/píxeles) cuando existan y el
+  // cliente lo autorice. Hoy no hay ninguno — la web no usa tracking de marketing.
+  function loadOptionalScripts(){}
+
+  function getConsent(){ try{ return localStorage.getItem(STORAGE_KEY); }catch(e){ return null; } }
+  function setConsent(level){
+    try{ localStorage.setItem(STORAGE_KEY, level); }catch(e){}
+    document.dispatchEvent(new CustomEvent("redirect:consent", { detail: level }));
+  }
+  window.redirectConsent = { get:getConsent, set:setConsent };
+
+  function hideBanner(){
+    banner.setAttribute("hidden","");
+    if(fab) fab.classList.remove("fab-cookie");
+  }
+  function showBanner(){
+    banner.removeAttribute("hidden");
+    if(fab) fab.classList.add("fab-cookie");
+  }
+
+  acceptBtn.addEventListener("click", function(){
+    setConsent("all");
+    hideBanner();
+    loadOptionalScripts();
+  });
+  rejectBtn.addEventListener("click", function(){
+    setConsent("essential");
+    hideBanner();
+  });
+
+  var existing = getConsent();
+  if(!existing){ showBanner(); }
+  else if(existing === "all"){ loadOptionalScripts(); }
 })();
 </script>
 
