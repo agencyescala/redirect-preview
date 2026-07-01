@@ -1537,34 +1537,28 @@
 </style>
 
 <style id="cookieBannerStyle">
+  /* Modal centrado — misma estética que .lang-menu / .rf-cal-shell (radius, sombra, fondo elevado) */
   #cookieBanner{
-    position:fixed; left:16px; right:16px; bottom:16px; z-index:9999;
-    max-width:560px; margin:0 auto;
-    background:var(--bg-card); color:var(--ink);
-    border:1px solid var(--line); border-radius:16px;
-    box-shadow:0 12px 32px -12px rgba(20,20,20,.28);
-    padding:18px 20px; display:flex; flex-direction:column; gap:14px;
-    animation:cookieIn .32s var(--ease) both;
+    position:fixed; inset:0; z-index:9999; padding:20px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(20,18,14,.45); -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
   }
   #cookieBanner[hidden]{ display:none; }
-  @keyframes cookieIn{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:translateY(0); } }
-  @media (prefers-reduced-motion:reduce){ #cookieBanner{ animation:none; } }
-  .cookie-text{ font-size:13.5px; line-height:1.5; color:rgba(20,20,20,.82); margin:0; }
-  .cookie-text a{ color:var(--red); text-decoration:underline; text-underline-offset:2px; }
+  html.cookie-open{ overflow:hidden; }
+  .cookie-card{
+    width:min(440px, 100%); background:var(--bg-elev); color:var(--ink);
+    border:1px solid var(--line-2); border-radius:20px;
+    box-shadow:0 30px 80px -18px rgba(20,18,14,.55), 0 3px 12px rgba(45,42,34,.10);
+    padding:28px 26px; display:flex; flex-direction:column; gap:18px;
+    animation:cookieIn .32s var(--ease) both;
+  }
+  @keyframes cookieIn{ from{ opacity:0; transform:translateY(10px) scale(.98); } to{ opacity:1; transform:translateY(0) scale(1); } }
+  @media (prefers-reduced-motion:reduce){ .cookie-card{ animation:none; } }
+  .cookie-text{ font-size:14.5px; line-height:1.55; color:var(--ink-dim); margin:0; }
+  .cookie-text a{ color:var(--red); font-weight:600; text-decoration:underline; text-underline-offset:2px; }
   .cookie-actions{ display:flex; gap:10px; flex-wrap:wrap; }
-  .cookie-actions .btn-primary, .cookie-actions .btn-ghost{
-    flex:1 1 auto; justify-content:center; font-size:13.5px; padding:11px 16px;
-  }
-  @media (min-width:641px){
-    #cookieBanner{ left:auto; right:24px; bottom:24px; flex-direction:row; align-items:center; max-width:640px; }
-    .cookie-text{ flex:1 1 auto; }
-    .cookie-actions{ flex:0 0 auto; }
-    .cookie-actions .btn-primary, .cookie-actions .btn-ghost{ flex:0 0 auto; }
-  }
-  /* deja hueco al FAB de WhatsApp mientras el banner está visible */
-  .fab.fab-cookie{ bottom:104px; }
-  @media (max-width:760px){ .fab.fab-cookie{ bottom:190px; } }
-  @media (min-width:641px){ .fab.fab-cookie{ bottom:96px; } }
+  .cookie-actions .btn{ flex:1 1 auto; }
+  @media (max-width:480px){ .cookie-actions{ flex-direction:column; } .cookie-actions .btn{ width:100%; } }
 </style>
 </head>
 <body>
@@ -2524,14 +2518,16 @@
   <span class="txt">WhatsApp</span>
 </a>
 
-<div id="cookieBanner" hidden role="dialog" aria-live="polite" data-i18n-aria="cookie.aria" aria-label="Cookie notice">
-  <p class="cookie-text">
-    <span data-i18n="cookie.text">Wir verwenden nur technisch notwendige Cookies. Optionale Cookies erst nach Ihrer Zustimmung.</span>
-    <a href="#datenschutz" id="cookieLink" data-i18n="cookie.link">Datenschutz</a>
-  </p>
-  <div class="cookie-actions">
-    <button type="button" id="cookieReject" class="btn-ghost" data-i18n="cookie.reject">Nur notwendige</button>
-    <button type="button" id="cookieAccept" class="btn-primary" data-i18n="cookie.accept">Alle akzeptieren</button>
+<div id="cookieBanner" hidden>
+  <div class="cookie-card" role="dialog" aria-modal="true" aria-live="polite" data-i18n-aria="cookie.aria" aria-label="Cookie notice">
+    <p class="cookie-text">
+      <span data-i18n="cookie.text">Wir verwenden nur technisch notwendige Cookies. Optionale Cookies erst nach Ihrer Zustimmung.</span>
+      <a href="#datenschutz" id="cookieLink" data-i18n="cookie.link">Datenschutz</a>
+    </p>
+    <div class="cookie-actions">
+      <button type="button" id="cookieReject" class="btn btn-ghost" data-i18n="cookie.reject">Nur notwendige</button>
+      <button type="button" id="cookieAccept" class="btn btn-primary" data-i18n="cookie.accept">Alle akzeptieren</button>
+    </div>
   </div>
 </div>
 
@@ -3539,7 +3535,6 @@
   if(!banner) return;
   var acceptBtn = document.getElementById("cookieAccept");
   var rejectBtn = document.getElementById("cookieReject");
-  var fab = document.querySelector(".fab");
 
   // Placeholder: aquí se cargarán scripts opcionales (analytics/píxeles) cuando existan y el
   // cliente lo autorice. Hoy no hay ninguno — la web no usa tracking de marketing.
@@ -3554,11 +3549,11 @@
 
   function hideBanner(){
     banner.setAttribute("hidden","");
-    if(fab) fab.classList.remove("fab-cookie");
+    document.documentElement.classList.remove("cookie-open");
   }
   function showBanner(){
     banner.removeAttribute("hidden");
-    if(fab) fab.classList.add("fab-cookie");
+    document.documentElement.classList.add("cookie-open");
   }
 
   acceptBtn.addEventListener("click", function(){
